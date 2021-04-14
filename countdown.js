@@ -4,7 +4,8 @@ class App extends React.Component {
         this.state = {
             dateString: "00:00:00",
             days: "00",
-            endDate: new Date(2021, 3, 25, 8)
+            endDate: new Date(2021, 3, 25, 8),
+            done: false
         };
         this.render = this.render.bind(this)
     };
@@ -12,17 +13,23 @@ class App extends React.Component {
     render() {
         setInterval(() => {
             date = new Date(new Date(this.state.endDate) - new Date());
+            done = new Date(new Date(this.state.endDate).getMilliseconds() >= new Date()).getMilliseconds();
+            console.log(done)
             this.setState({
                 timeString: `${date.toTimeString().split(" ")[0]}`,
-                days: `${date.getDate()}`
+                days: `${date.getDate()}`,
+                done: done
             });
         }, 1000);
         return (
-            <div id = "display">
-                <div id="time">{
-                    this.state.timeString
-                }</div>
-                <div id = "date">{this.state.days}</div>
+            <div >
+                {this.state.done ? 
+                <div><iframe src="https://giphy.com/embed/hTfklxYUDhdvhBI485" width="480" height="384" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                <h1>We did it! 😍</h1>
+                </div> :
+                <div id = "display"><div id="time">{this.state.timeString}</div>
+                <div id = "date">{this.state.days}</div></div>
+                }
             </div>
         );
     };
