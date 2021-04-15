@@ -5,7 +5,9 @@ class App extends React.Component {
             dateString: "00:00:00",
             days: "00",
             endDate: new Date(2021, 3, 25, 8),
-            done: false
+            done: false,
+            beginning: new Date(2021, 3, 15, 6, 53),
+            percent: 0
         };
         this.render = this.render.bind(this)
     };
@@ -14,11 +16,13 @@ class App extends React.Component {
         setInterval(() => {
             date = new Date(new Date(this.state.endDate) - new Date());
             done = new Date(new Date(this.state.endDate).getMilliseconds() >= new Date()).getMilliseconds();
-            console.log(done)
+            beginning = new Date(new Date(this.state.beginning))
+            percent = (new Date() - beginning) / (new Date(this.state.endDate) - beginning);
             this.setState({
                 timeString: `${date.toTimeString().split(" ")[0]}`,
                 days: `${date.getDate()}`,
-                done: done
+                done: done,
+                percent: percent
             });
         }, 1000);
         return (
@@ -28,7 +32,9 @@ class App extends React.Component {
                 <h1>We did it! 😍</h1>
                 </div> :
                 <div id = "display"><div id="time">{this.state.timeString}</div>
-                <div id = "date">{this.state.days}</div></div>
+                <div id = "date">{this.state.days}</div>
+                <div id = "bar" style = {{width: this.state.percent*100 + `vw`}}></div>
+                </div>
                 }
             </div>
         );
