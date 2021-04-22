@@ -3,7 +3,7 @@ class App extends React.Component {
         super(props)
         this.state = {
             dateString: "00:00:00",
-            days: "00",
+            days: "",
             endDate: new Date(2021, 3, 25, 8),
             done: false,
             beginning: new Date(2021, 3, 15, 6, 53),
